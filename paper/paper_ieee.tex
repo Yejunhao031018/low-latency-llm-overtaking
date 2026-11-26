@@ -27,7 +27,10 @@ email@example.com}}
 \begin{abstract}
 Large language models (LLMs) have recently been used as decision-makers for
 autonomous driving, but existing approaches rely on cloud APIs whose
-multi-second inference latency precludes real-time, safety-critical use. We
+multi-second inference latency precludes real-time, safety-critical use. This
+gap is most acute in \emph{high-speed} scenarios such as highway overtaking,
+where at 108~km/h a three-second decision corresponds to roughly 100~m of
+travel --- the decision arrives after the scene it describes has vanished. We
 argue that the LLM should act only as a \emph{low-frequency tactical} layer ---
 issuing coarse overtake/hold intents --- while a classical 20~Hz controller
 handles trajectory tracking and safety. Under this decomposition we fine-tune a
@@ -282,17 +285,21 @@ the most accurate.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{latency_comparison.pdf}
-\caption{Decision latency and distance traveled at 30~m/s. Our 1.5B-short
-model responds in 0.59~s ($\approx$18~m); a cloud GPT-4 decision arrives after
-$\approx$105~m --- by which time the traffic scene has changed.}
+\includegraphics[width=\columnwidth]{distance_traveled.pdf}
+\caption{Distance traveled before the decision arrives, at highway speed
+(108~km/h, 30~m/s). Our 1.5B-short model responds in 0.59~s ($\approx$18~m);
+a cloud GPT-4 decision arrives after $\approx$105~m --- a full football field
+--- by which time the overtaking window has closed.}
 \label{fig:latcomp}
 \end{figure}
 
-Fig.~\ref{fig:latcomp} makes the latency advantage concrete: at 30~m/s, the
-0.59~s decision is 18~m of travel, whereas a cloud-API decision (3--4~s)
-corresponds to roughly 100~m. The 1.5B-short model therefore operates
-\emph{inside} the tolerable regime established in Sec.~\ref{sec:stale}.
+Fig.~\ref{fig:latcomp} makes the latency advantage concrete: at 108~km/h
+(30~m/s), the 0.59~s decision is 18~m of travel, whereas a cloud-API decision
+(3--4~s) corresponds to roughly 100~m. For high-speed overtaking, sub-second
+latency is therefore not an optimization but the \emph{enabling condition}: a
+decision that arrives 100~m late describes a scene that no longer exists. The
+1.5B-short model operates \emph{inside} the tolerable regime established in
+Sec.~\ref{sec:stale}.
 
 \subsection{Closed-Loop Overtaking (20 seeds, corner R=188)}
 \begin{table}[t]

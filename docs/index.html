@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Low-Latency Edge LLM Tactical Decision-Making for High-Speed Autonomous Overtaking</title>
+<title>Low-Latency Edge LLM for High-Speed Autonomous Overtaking</title>
 <style>
   :root{
     --bg:#0b1120; --card:#111a2e; --card2:#0e1628; --border:#1e2b47;
     --text:#e8eefc; --muted:#8fa3c8; --accent:#38bdf8; --accent2:#818cf8; --green:#34d399;
+    --danger:#f87171;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -19,43 +20,59 @@
     color:var(--text); line-height:1.65; -webkit-font-smoothing:antialiased;
   }
   a{color:var(--accent); text-decoration:none;}
-  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 24px;}
 
   /* ---------- hero ---------- */
-  header{padding:72px 0 48px; text-align:center;}
+  header{padding:76px 0 44px; text-align:center;}
   .tag{
-    display:inline-block; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;
-    color:var(--accent); border:1px solid #23406b; border-radius:999px; padding:5px 14px;
-    margin-bottom:20px; background:rgba(56,189,248,.06);
+    display:inline-block; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:#7dd3fc; border:1px solid #23406b; border-radius:999px; padding:5px 15px;
+    margin-bottom:22px; background:rgba(56,189,248,.07);
   }
   h1{
-    font-size:42px; line-height:1.15; font-weight:800; letter-spacing:-.02em;
-    background:linear-gradient(90deg,#e0e9ff 0%,#8bb0ff 50%,#5eead4 100%);
+    font-size:46px; line-height:1.13; font-weight:800; letter-spacing:-.02em;
+    background:linear-gradient(90deg,#e0e9ff 0%,#8bb0ff 55%,#5eead4 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
-    max-width:900px; margin:0 auto 18px;
+    max-width:940px; margin:0 auto 20px;
   }
-  .lead{font-size:17px; color:var(--muted); max-width:760px; margin:0 auto 32px;}
+  .lead{font-size:17.5px; color:var(--muted); max-width:780px; margin:0 auto 18px;}
+  .lead b{color:#fff;}
+  .speed{
+    font-size:15px; color:#93c5fd; max-width:680px; margin:0 auto 30px; font-weight:500;
+  }
   .metrics{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
   .metric{
     background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01));
-    border:1px solid var(--border); border-radius:16px; padding:16px 24px; min-width:130px;
+    border:1px solid var(--border); border-radius:16px; padding:16px 24px; min-width:132px;
     backdrop-filter:blur(6px);
   }
-  .metric b{display:block; font-size:30px; font-weight:800; color:#fff; letter-spacing:-.01em;}
+  .metric b{display:block; font-size:31px; font-weight:800; color:#fff; letter-spacing:-.01em;}
   .metric span{font-size:12.5px; color:var(--muted);}
 
   /* ---------- sections ---------- */
-  section{padding:40px 0;}
-  h2{font-size:26px; font-weight:750; margin-bottom:6px; letter-spacing:-.01em;}
-  .sec-sub{color:var(--muted); font-size:14.5px; margin-bottom:26px;}
+  section{padding:42px 0;}
+  h2{font-size:27px; font-weight:750; margin-bottom:6px; letter-spacing:-.01em;}
+  .sec-sub{color:var(--muted); font-size:15px; margin-bottom:26px; max-width:760px;}
+  .sec-sub b{color:#cbd5e1;}
   .card{
     background:var(--card); border:1px solid var(--border); border-radius:18px;
     padding:28px 30px; box-shadow:0 10px 40px rgba(0,0,0,.35);
   }
+  .card p{color:#cbd5e1; font-size:15px; margin-top:8px;}
 
-  /* abstract */
-  .abstract{font-size:15.5px; color:#cbd5e1;}
-  .abstract b{color:#fff;}
+  /* highlight box */
+  .hl-box{
+    background:linear-gradient(180deg,rgba(14,165,233,.08),rgba(14,165,233,.02));
+    border:1px solid #1e3a5f; border-radius:16px; padding:20px 24px; margin:18px 0;
+    font-size:15.5px; color:#dbeafe;
+  }
+  .hl-box b{color:#7dd3fc;}
+
+  /* figure */
+  .fig{text-align:center; margin-top:8px;}
+  .fig img{width:100%; max-width:900px; border-radius:14px; border:1px solid var(--border);}
+  .fig .cap{text-align:center; margin-top:12px; font-size:13px; color:var(--muted);}
+  .fig .cap b{color:var(--accent);}
 
   /* video grid */
   .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
@@ -63,11 +80,6 @@
   video{width:100%; border-radius:14px; border:1px solid var(--border); background:#000; display:block;}
   .cap{font-size:12.5px; color:var(--muted); margin-top:8px;}
   .cap b{color:var(--accent);}
-
-  /* figures */
-  .fig{text-align:center;}
-  .fig img{width:100%; max-width:860px; border-radius:14px; border:1px solid var(--border);}
-  .fig .cap{text-align:center; margin-top:10px;}
 
   /* results table */
   table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:6px;}
@@ -81,25 +93,14 @@
   .cards{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   @media(max-width:760px){.cards{grid-template-columns:1fr;}}
   .contrib{background:var(--card2); border:1px solid var(--border); border-radius:16px; padding:22px;}
-  .contrib .n{
-    font-size:12px; font-weight:800; color:var(--accent2); letter-spacing:.06em;
-    text-transform:uppercase; margin-bottom:8px;
-  }
+  .contrib .n{font-size:12px; font-weight:800; color:var(--accent2); letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px;}
   .contrib h3{font-size:16px; margin-bottom:8px; color:#fff;}
   .contrib p{font-size:13.5px; color:#aebad2;}
 
   /* bibtex */
-  pre{
-    background:#070c18; border:1px solid var(--border); border-radius:14px;
-    padding:20px; overflow-x:auto; font-size:12.5px; line-height:1.6;
-    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; color:#a5c4e8;
-  }
+  pre{background:#070c18; border:1px solid var(--border); border-radius:14px; padding:20px; overflow-x:auto; font-size:12.5px; line-height:1.6; font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; color:#a5c4e8;}
   .btns{display:flex; gap:12px; justify-content:center; margin-top:26px; flex-wrap:wrap;}
-  .btn{
-    display:inline-block; padding:11px 22px; border-radius:12px; font-size:14px; font-weight:600;
-    border:1px solid var(--border); background:rgba(255,255,255,.03); color:#fff;
-    transition:.15s;
-  }
+  .btn{display:inline-block; padding:11px 22px; border-radius:12px; font-size:14px; font-weight:600; border:1px solid var(--border); background:rgba(255,255,255,.03); color:#fff; transition:.15s;}
   .btn:hover{border-color:var(--accent); background:rgba(56,189,248,.08);}
   .btn.primary{background:linear-gradient(90deg,#0ea5e9,#6366f1); border:none;}
   .btn.primary:hover{filter:brightness(1.1);}
@@ -111,8 +112,9 @@
 
 <header class="wrap">
   <span class="tag">ITSC / IV 2026 · Submission</span>
-  <h1>Low-Latency Edge LLM Tactical Decision-Making for High-Speed Autonomous Overtaking</h1>
-  <p class="lead">A 1.5B local large language model that decides <i>overtake or hold</i> in <b style="color:#fff">0.59 s</b> — an order of magnitude faster than cloud-API LLMs — while a 20&nbsp;Hz controller keeps the maneuver safe.</p>
+  <h1>Low-Latency Edge LLM for High-Speed Autonomous Overtaking</h1>
+  <p class="lead">A <b>1.5B local LLM</b> decides <i>overtake or hold</i> in <b style="color:#5eead4">0.59 s</b> — while a 20&nbsp;Hz controller keeps the maneuver safe.</p>
+  <p class="speed">⚡ The catch: at <b style="color:#fff">108 km/h (30 m/s)</b>, every second is <b style="color:#fff">30 meters</b>. Cloud LLMs answer in seconds; ours answers in 0.59 s.</p>
   <div class="metrics">
     <div class="metric"><b>0.59 s</b><span>decision latency</span></div>
     <div class="metric"><b>86.1%</b><span>decision accuracy</span></div>
@@ -125,34 +127,52 @@
 <main class="wrap">
 
   <section>
+    <h2>Why high speed makes latency critical</h2>
+    <p class="sec-sub">Low-latency decisions matter <b>because</b> the car is moving fast. At highway speed, the latency of a decision is literally a distance — the distance the car travels before it can react.</p>
+    <div class="card">
+      <div class="fig">
+        <img src="assets/distance_traveled.png" alt="distance traveled during decision">
+        <div class="cap">Distance traveled before the decision arrives, at <b>108 km/h</b>. Our 0.59&nbsp;s decision arrives after <b>18 m</b>; a cloud GPT-4 decision arrives after <b>105 m — a full football field</b> — by which time the overtaking window has closed.</div>
+      </div>
+      <div class="hl-box">
+        A decision that arrives <b>105 m late</b> describes a traffic scene that <b>no longer exists</b>. For high-speed overtaking, sub-second latency is not an optimization — it is the <b>enabling condition</b>.
+      </div>
+    </div>
+  </section>
+
+  <section>
     <h2>Abstract</h2>
-    <p class="sec-sub">The core idea in one paragraph.</p>
-    <div class="card abstract">
+    <div class="card">
       <p>Large language models (LLMs) have recently been used as decision-makers for autonomous driving, but existing approaches rely on cloud APIs whose multi-second inference latency precludes real-time, safety-critical use. We argue the LLM should act only as a <b>low-frequency tactical layer</b> — issuing coarse <i>overtake/hold</i> intents — while a classical 20&nbsp;Hz controller handles tracking and safety. We fine-tune a <b>Qwen2.5-1.5B</b> model with LoRA and show a short-output variant reaches <b>0.59 s</b> on a consumer 8&nbsp;GB GPU — an order of magnitude faster than cloud baselines — while retaining 86.1% accuracy, the Pareto-optimal point among 0.5B–7B alternatives. In closed-loop CARLA experiments the system completes overtakes with <b>95–100% pass rate</b> and median clearance ≥2.2 m across ten scenarios, generalizing <i>zero-shot</i> from training on only two corner geometries. We also report two honest negative results: multi-scenario fine-tuning on rule-expert data <i>regresses</i> (catastrophic forgetting), and a CBF-QP filter underperforms a simple geometric shield.</p>
     </div>
   </section>
 
   <section>
     <h2>Latency Advantage</h2>
-    <p class="sec-sub">The core contribution: <b style="color:#5eead4">0.59 s</b> decisions vs. multi-second cloud LLMs. At 30&nbsp;m/s, a decision's delay is distance traveled before the car reacts.</p>
-    <div class="card fig"><img src="assets/latency_comparison.png" alt="latency comparison"><div class="cap">Decision latency and distance traveled at 30&nbsp;m/s. Our 1.5B-short model responds in 0.59&nbsp;s (~18&nbsp;m); a cloud GPT-4 decision arrives after ~105&nbsp;m.</div></div>
+    <p class="sec-sub">The <b>Pareto-optimal point</b>: our 1.5B-short model is fastest <i>and</i> more accurate than 3B/7B — because bigger models must be quantized to 4-bit to fit 8&nbsp;GB.</p>
+    <div class="card fig">
+      <img src="assets/latency_superiority.png" alt="latency pareto">
+      <div class="cap">(a) Decision latency, (b) accuracy–latency Pareto. The 1.5B-short model dominates 3B and 7B on <i>both</i> axes.</div>
+    </div>
   </section>
 
   <section>
     <h2>Live Decision Process</h2>
-    <p class="sec-sub">Watch the LLM decide in real time. The HUD shows the model's actual JSON intent at each moment — <i>hold</i> then <i>overtake</i> — issued at 1&nbsp;Hz with 0.59&nbsp;s latency.</p>
-    <div class="card fig"><img src="assets/overtake_hud.gif" alt="overtake with decision HUD" style="max-width:560px;"><div class="cap">Animated overtake with the live decision HUD: the model switches from <b>HOLD</b> to <b>OVERTAKE</b> at t≈11.7 s, then completes the pass.</div></div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
-      <div class="card fig"><img src="assets/decision_timeline.png" alt="decision timeline"><div class="cap">Decision timeline: the attack offset (green) and inside-line flag (amber) over time.</div></div>
-      <div class="card fig"><img src="assets/overtake_sequence.png" alt="overtake sequence"><div class="cap">Bird's-eye overtake sequence (t = 5.2 s → 20.6 s).</div></div>
+    <p class="sec-sub">Watch the LLM decide in real time. The HUD shows the model's actual JSON intent — <i>hold</i> then <i>overtake</i> — issued at 1&nbsp;Hz with 0.59&nbsp;s latency.</p>
+    <div class="card">
+      <div class="fig"><img src="assets/overtake_hud.gif" alt="overtake with decision HUD" style="max-width:560px;"><div class="cap">The model switches from <b>HOLD</b> to <b>OVERTAKE</b> at t≈11.7 s, then completes the pass at t≈18.7 s.</div></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+        <div class="fig"><img src="assets/decision_timeline.png" alt="decision timeline"><div class="cap">Decision timeline: attack offset (green) and inside-line flag (amber).</div></div>
+        <div class="fig"><img src="assets/overtake_sequence.png" alt="overtake sequence"><div class="cap">Bird's-eye overtake sequence.</div></div>
+      </div>
     </div>
   </section>
 
   <section>
     <h2>Demo</h2>
-    <p class="sec-sub">Closed-loop overtaking in CARLA Town04. <b style="color:#5eead4">LLM-driven</b> (our model) vs. a <b style="color:#fbbf24">rule-based stub</b> baseline. Blue = ego, red = lead.</p>
+    <p class="sec-sub">Closed-loop overtaking in CARLA Town04. <b style="color:#5eead4">LLM-driven</b> (our model) vs a <b style="color:#fbbf24">rule-based stub</b> baseline. Blue = ego, red = lead.</p>
     <div class="grid2">
-      <div><video src="assets/overtake_bird_llm.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>LLM · bird's-eye</b> — the model decides the inside pass</div></div>
+      <div><video src="assets/overtake_bird_llm.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>LLM · bird's-eye</b></div></div>
       <div><video src="assets/overtake_front_llm.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>LLM · front view</b></div></div>
       <div><video src="assets/overtake_bird_stub.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>Stub baseline · bird's-eye</b></div></div>
       <div><video src="assets/overtake_front_stub.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>Stub baseline · front view</b></div></div>
@@ -162,13 +182,7 @@
   <section>
     <h2>Architecture</h2>
     <p class="sec-sub">Two-timescale decomposition: the LLM owns <i>intent</i> at 1&nbsp;Hz; a rule-based controller owns <i>safety</i> at 20&nbsp;Hz.</p>
-    <div class="card fig"><img src="assets/architecture.png" alt="architecture"><div class="cap">Layered architecture. Decision latency is absorbed into the 1&nbsp;Hz cadence, not the 20&nbsp;Hz control loop.</div></div>
-  </section>
-
-  <section>
-    <h2>Latency–Accuracy Pareto</h2>
-    <p class="sec-sub">The 1.5B-short model is <b style="color:#5eead4">the Pareto-optimal point</b>: fastest <i>and</i> more accurate than 3B/7B, because bigger models must be quantized to 4-bit to fit 8&nbsp;GB.</p>
-    <div class="card fig"><img src="assets/latency_superiority.png" alt="pareto"><div class="cap">(a) Decision latency, (b) accuracy–latency Pareto.</div></div>
+    <div class="card fig"><img src="assets/architecture.png" alt="architecture"><div class="cap">Decision latency is absorbed into the 1&nbsp;Hz cadence, not the 20&nbsp;Hz control loop.</div></div>
   </section>
 
   <section>

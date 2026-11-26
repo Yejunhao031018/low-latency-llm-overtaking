@@ -45,10 +45,31 @@ decision *cadence*, so a sub-second decision is tolerable and a multi-second
 ├── docs/
 │   ├── index.html            # project website (GitHub Pages)
 │   └── assets/               # videos, GIFs, figures
-├── finetune/                 # LoRA training + serving + eval
-├── results/                  # benchmark outputs + stats
+├── weights/
+│   └── qwen1.5b-sft-short-lr/  # LoRA adapter (open-sourced model)
+├── *.py                      # core source (flat module system, at repo root)
+│   ├── dataset_runner.py     #   episode runner + control layer
+│   ├── race_overtake.py      #   ring building + demo
+│   ├── run_benchmark.py      #   closed-loop benchmark
+│   ├── collect_dataset.py    #   data collection
+│   ├── label_dataset.py      #   counterfactual labeling
+│   ├── llm_decision.py       #   decision engine (stub / lora / openai)
+│   ├── *_mpc.py / sysid*.py  #   experimental MPC + system identification
+│   └── finetune/             #   LoRA training + serving + eval
+├── scripts/                  # shell scripts + progress watchers
+│   ├── run_py.sh             #   run a script with the CARLA env
+│   ├── start_carla.sh        #   launch CARLA
+│   └── figures/              #   figure generation + plotting
+├── assets/                   # media (GIFs, montages, telemetry)
 └── README.md
 ```
+
+## Model Weights
+
+The fine-tuned LoRA adapter is open-sourced in [`weights/qwen1.5b-sft-short-lr/`](weights/):
+74 MB (`adapter_model.safetensors` + `adapter_config.json`). Load it on top of
+[Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) — see
+[`weights/README.md`](weights/README.md) for instructions.
 
 ## Method
 
@@ -79,4 +100,4 @@ decision *cadence*, so a sub-second decision is tolerable and a multi-second
 
 ## License
 
-MIT (fill in before release).
+[MIT](LICENSE)
