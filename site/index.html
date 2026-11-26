@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low-Latency Edge LLM Tactical Decision-Making for High-Speed Autonomous Overtaking</title>
+<style>
+  :root{
+    --bg:#0b1120; --card:#111a2e; --card2:#0e1628; --border:#1e2b47;
+    --text:#e8eefc; --muted:#8fa3c8; --accent:#38bdf8; --accent2:#818cf8; --green:#34d399;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #1b2a4a 0%, transparent 55%),
+      radial-gradient(1000px 500px at 100% 0%, #12203c 0%, transparent 50%),
+      var(--bg);
+    color:var(--text); line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- hero ---------- */
+  header{padding:72px 0 48px; text-align:center;}
+  .tag{
+    display:inline-block; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent); border:1px solid #23406b; border-radius:999px; padding:5px 14px;
+    margin-bottom:20px; background:rgba(56,189,248,.06);
+  }
+  h1{
+    font-size:42px; line-height:1.15; font-weight:800; letter-spacing:-.02em;
+    background:linear-gradient(90deg,#e0e9ff 0%,#8bb0ff 50%,#5eead4 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    max-width:900px; margin:0 auto 18px;
+  }
+  .lead{font-size:17px; color:var(--muted); max-width:760px; margin:0 auto 32px;}
+  .metrics{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .metric{
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.01));
+    border:1px solid var(--border); border-radius:16px; padding:16px 24px; min-width:130px;
+    backdrop-filter:blur(6px);
+  }
+  .metric b{display:block; font-size:30px; font-weight:800; color:#fff; letter-spacing:-.01em;}
+  .metric span{font-size:12.5px; color:var(--muted);}
+
+  /* ---------- sections ---------- */
+  section{padding:40px 0;}
+  h2{font-size:26px; font-weight:750; margin-bottom:6px; letter-spacing:-.01em;}
+  .sec-sub{color:var(--muted); font-size:14.5px; margin-bottom:26px;}
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:18px;
+    padding:28px 30px; box-shadow:0 10px 40px rgba(0,0,0,.35);
+  }
+
+  /* abstract */
+  .abstract{font-size:15.5px; color:#cbd5e1;}
+  .abstract b{color:#fff;}
+
+  /* video grid */
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+  video{width:100%; border-radius:14px; border:1px solid var(--border); background:#000; display:block;}
+  .cap{font-size:12.5px; color:var(--muted); margin-top:8px;}
+  .cap b{color:var(--accent);}
+
+  /* figures */
+  .fig{text-align:center;}
+  .fig img{width:100%; max-width:860px; border-radius:14px; border:1px solid var(--border);}
+  .fig .cap{text-align:center; margin-top:10px;}
+
+  /* results table */
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:6px;}
+  th,td{padding:9px 12px; text-align:center; border-bottom:1px solid var(--border);}
+  th{color:var(--muted); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.04em;}
+  tr:last-child td{border-bottom:none;}
+  .hl{color:var(--green); font-weight:700;}
+  .ok{color:var(--green);} .warn{color:#fbbf24;}
+
+  /* contributions */
+  .cards{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:760px){.cards{grid-template-columns:1fr;}}
+  .contrib{background:var(--card2); border:1px solid var(--border); border-radius:16px; padding:22px;}
+  .contrib .n{
+    font-size:12px; font-weight:800; color:var(--accent2); letter-spacing:.06em;
+    text-transform:uppercase; margin-bottom:8px;
+  }
+  .contrib h3{font-size:16px; margin-bottom:8px; color:#fff;}
+  .contrib p{font-size:13.5px; color:#aebad2;}
+
+  /* bibtex */
+  pre{
+    background:#070c18; border:1px solid var(--border); border-radius:14px;
+    padding:20px; overflow-x:auto; font-size:12.5px; line-height:1.6;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; color:#a5c4e8;
+  }
+  .btns{display:flex; gap:12px; justify-content:center; margin-top:26px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:11px 22px; border-radius:12px; font-size:14px; font-weight:600;
+    border:1px solid var(--border); background:rgba(255,255,255,.03); color:#fff;
+    transition:.15s;
+  }
+  .btn:hover{border-color:var(--accent); background:rgba(56,189,248,.08);}
+  .btn.primary{background:linear-gradient(90deg,#0ea5e9,#6366f1); border:none;}
+  .btn.primary:hover{filter:brightness(1.1);}
+
+  footer{padding:40px 0 60px; text-align:center; color:var(--muted); font-size:13px; border-top:1px solid var(--border); margin-top:20px;}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <span class="tag">ITSC / IV 2026 · Submission</span>
+  <h1>Low-Latency Edge LLM Tactical Decision-Making for High-Speed Autonomous Overtaking</h1>
+  <p class="lead">A 1.5B local large language model that decides <i>overtake or hold</i> in <b style="color:#fff">0.59 s</b> — an order of magnitude faster than cloud-API LLMs — while a 20&nbsp;Hz controller keeps the maneuver safe.</p>
+  <div class="metrics">
+    <div class="metric"><b>0.59 s</b><span>decision latency</span></div>
+    <div class="metric"><b>86.1%</b><span>decision accuracy</span></div>
+    <div class="metric"><b>96%</b><span>pass rate (100 runs)</span></div>
+    <div class="metric"><b>10</b><span>scenarios · zero-shot</span></div>
+    <div class="metric"><b>2.2 m</b><span>median clearance</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>Abstract</h2>
+    <p class="sec-sub">The core idea in one paragraph.</p>
+    <div class="card abstract">
+      <p>Large language models (LLMs) have recently been used as decision-makers for autonomous driving, but existing approaches rely on cloud APIs whose multi-second inference latency precludes real-time, safety-critical use. We argue the LLM should act only as a <b>low-frequency tactical layer</b> — issuing coarse <i>overtake/hold</i> intents — while a classical 20&nbsp;Hz controller handles tracking and safety. We fine-tune a <b>Qwen2.5-1.5B</b> model with LoRA and show a short-output variant reaches <b>0.59 s</b> on a consumer 8&nbsp;GB GPU — an order of magnitude faster than cloud baselines — while retaining 86.1% accuracy, the Pareto-optimal point among 0.5B–7B alternatives. In closed-loop CARLA experiments the system completes overtakes with <b>95–100% pass rate</b> and median clearance ≥2.2 m across ten scenarios, generalizing <i>zero-shot</i> from training on only two corner geometries. We also report two honest negative results: multi-scenario fine-tuning on rule-expert data <i>regresses</i> (catastrophic forgetting), and a CBF-QP filter underperforms a simple geometric shield.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Demo</h2>
+    <p class="sec-sub">Closed-loop overtaking in CARLA Town04. <b style="color:#5eead4">LLM-driven</b> (our model) vs. a <b style="color:#fbbf24">rule-based stub</b> baseline. Blue = ego, red = lead.</p>
+    <div class="grid2">
+      <div><video src="assets/overtake_bird_llm.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>LLM · bird's-eye</b> — the model decides the inside pass</div></div>
+      <div><video src="assets/overtake_front_llm.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>LLM · front view</b></div></div>
+      <div><video src="assets/overtake_bird_stub.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>Stub baseline · bird's-eye</b></div></div>
+      <div><video src="assets/overtake_front_stub.mp4" autoplay loop muted playsinline controls></video><div class="cap"><b>Stub baseline · front view</b></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Architecture</h2>
+    <p class="sec-sub">Two-timescale decomposition: the LLM owns <i>intent</i> at 1&nbsp;Hz; a rule-based controller owns <i>safety</i> at 20&nbsp;Hz.</p>
+    <div class="card fig"><img src="assets/architecture.png" alt="architecture"><div class="cap">Layered architecture. Decision latency is absorbed into the 1&nbsp;Hz cadence, not the 20&nbsp;Hz control loop.</div></div>
+  </section>
+
+  <section>
+    <h2>Latency–Accuracy Pareto</h2>
+    <p class="sec-sub">The 1.5B-short model is <b style="color:#5eead4">the Pareto-optimal point</b>: fastest <i>and</i> more accurate than 3B/7B, because bigger models must be quantized to 4-bit to fit 8&nbsp;GB.</p>
+    <div class="card fig"><img src="assets/latency_superiority.png" alt="pareto"><div class="cap">(a) Decision latency, (b) accuracy–latency Pareto.</div></div>
+  </section>
+
+  <section>
+    <h2>Key Results</h2>
+    <p class="sec-sub">Zero-shot generalization across ten corner–lead scenarios (10 seeds each).</p>
+    <div class="card">
+      <table>
+        <thead><tr><th>Corner</th><th>Lead</th><th>Pass</th><th>Collision</th><th>minSep med.</th></tr></thead>
+        <tbody>
+          <tr><td>R=208</td><td>constant</td><td class="ok">100%</td><td class="ok">0</td><td>2.77 m</td></tr>
+          <tr><td>R=208</td><td>variable</td><td class="ok">100%</td><td class="ok">0</td><td>3.30 m</td></tr>
+          <tr><td>R=208</td><td>defensive</td><td class="ok">90%</td><td class="ok">0</td><td>2.33 m</td></tr>
+          <tr><td>R=151</td><td>constant</td><td class="ok">100%</td><td class="ok">0</td><td>3.28 m</td></tr>
+          <tr><td>R=151</td><td>variable</td><td class="ok">100%</td><td class="ok">0</td><td>2.79 m</td></tr>
+          <tr><td>R=151</td><td>defensive</td><td class="ok">100%</td><td class="ok">0</td><td>2.37 m</td></tr>
+          <tr><td>R=188</td><td>constant</td><td class="ok">100%</td><td class="ok">0</td><td>2.84 m</td></tr>
+          <tr><td>R=188</td><td>defensive</td><td class="ok">90%</td><td class="ok">0</td><td>2.28 m</td></tr>
+          <tr><td>R=83</td><td>constant</td><td class="warn">80%</td><td class="warn">2</td><td>2.74 m</td></tr>
+          <tr><td>R=138</td><td>variable</td><td class="ok">100%</td><td class="ok">0</td><td>3.26 m</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:14px; text-align:center; font-size:14px; color:#aebad2;">
+        Aggregate: <span class="hl">96 / 100 passes (96%)</span> · <span class="hl">2 collisions (2%)</span>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Contributions</h2>
+    <p class="sec-sub">Four contributions, including two honest negative results.</p>
+    <div class="cards">
+      <div class="contrib"><div class="n">01 · Pareto</div><h3>Latency–accuracy Pareto</h3><p>A short-output 1.5B variant is optimal: 0.59 s and 86.1%, beating 3B (2.02 s) and 7B (1.41 s) on both axes.</p></div>
+      <div class="contrib"><div class="n">02 · Closed-loop</div><h3>Zero-shot generalization</h3><p>Trained on two corner geometries, the system generalizes to ten scenarios with 96% pass rate and median clearance ≥2.2 m.</p></div>
+      <div class="contrib"><div class="n">03 · Stale boundary</div><h3>Quantified staleness</h3><p>0.5 s of decision delay is tolerated; 0.8 s degrades safety — the quantitative case for the latency reduction.</p></div>
+      <div class="contrib"><div class="n">04 · Negative results</div><h3>Honest findings</h3><p>Multi-scenario behavior cloning regresses (catastrophic forgetting); a CBF-QP filter underperforms a geometric shield.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Citation</h2>
+    <pre>@misc{llm-overtaking-2026,
+  title  = {Low-Latency Edge LLM Tactical Decision-Making
+            for High-Speed Autonomous Overtaking},
+  author = {Author Name},
+  year   = {2026},
+  note   = {Under review}
+}</pre>
+    <div class="btns">
+      <a class="btn primary" href="#">Paper (arXiv, coming soon)</a>
+      <a class="btn" href="#">IEEE LaTeX source</a>
+      <a class="btn" href="#">GitHub repository</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Built with CARLA · Qwen2.5 · LoRA &nbsp;|&nbsp; © 2026
+</footer>
+
+</body>
+</html>

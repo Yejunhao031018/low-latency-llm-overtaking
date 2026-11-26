@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>Tactical decision monitor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: ui-sans-serif, system-ui, "Segoe UI", Arial;
+    background: radial-gradient(700px 400px at 20% 0%, #14233f 0%, #0a0f1c 60%, #06090f 100%);
+    color: #e8eefc; min-height: 100vh; display: flex; justify-content: center;
+  }
+  .hud { width: min(430px, 96vw); padding: 14px; }
+  .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .title { font-size: 15px; font-weight: 650; letter-spacing: .2px; }
+  .live { font-size: 10px; padding: 3px 8px; border-radius: 999px; background: #11321f;
+          color: #6ef0a0; border: 1px solid #1f6b43; }
+  .live.wait { background: #33260e; color: #f5c46a; border-color: #6b4c1f; }
+  .legend { font-size: 10.5px; color: #8fa3c8; margin: 0 0 8px 2px; }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 4px 0 10px; }
+  .dot.lead { background: #ff9628; }
+  .dot.ego { background: #00e6ff; }
+  .action {
+    border-radius: 16px; padding: 16px 18px; margin-bottom: 10px;
+    background: linear-gradient(135deg, #14243f, #0d1729);
+    border: 1px solid #22375c; transition: background .3s, border-color .3s;
+  }
+  .action.overtake { background: linear-gradient(135deg, #0d3b2b, #0a2119);
+                     border-color: #1f8f5f; box-shadow: 0 0 26px rgba(34,211,150,.16); }
+  .action.hold { border-color: #5a4a20; }
+  .act-label { font-size: 30px; font-weight: 800; letter-spacing: .5px; line-height: 1; }
+  .action.overtake .act-label { color: #5cf2a8; }
+  .action.hold .act-label { color: #f5c46a; }
+  .reason { margin-top: 9px; font-size: 12px; line-height: 1.45; color: #a9bbd8; min-height: 34px; }
+  .phase { margin-top: 7px; font-size: 11px; color: #7f93b5; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+  .cell { background: #0b1427; border: 1px solid #1a2b4a; border-radius: 10px; padding: 8px 9px; }
+  .cell .k { font-size: 9px; color: #7388aa; letter-spacing: .7px; text-transform: uppercase; }
+  .cell .v { font-size: 17px; font-weight: 650; margin-top: 3px; font-variant-numeric: tabular-nums; }
+  .cell .v small { font-size: 10px; color: #8fa3c8; font-weight: 400; }
+  .row { display: flex; justify-content: space-between; align-items: center; font-size: 11px;
+         color: #8fa3c8; margin: 5px 0; }
+  .row b { color: #e8eefc; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tag { font-size: 10px; padding: 2px 7px; border-radius: 999px; background: #1a2b4a; color: #9ec5ff; }
+  .tag.bad { background: #3a1a1a; color: #ff9d9d; }
+  h3 { font-size: 11px; color: #7388aa; letter-spacing: .8px; margin: 12px 0 6px; text-transform: uppercase; }
+  canvas { width: 100%; height: 92px; display: block; background: #081022; border: 1px solid #162645;
+           border-radius: 10px; }
+  .timeline { display: flex; flex-direction: column; gap: 4px; max-height: 150px; overflow: hidden; }
+  .dec { display: grid; grid-template-columns: 44px 62px 1fr 44px; gap: 6px; align-items: center;
+         font-size: 10.5px; padding: 4px 7px; border-radius: 7px; background: #0a1324;
+         border-left: 2px solid #2b4066; }
+  .dec.ov { border-left-color: #22c98a; color: #bff7dc; }
+  .dec.hd { border-left-color: #b98b32; color: #f3d9a5; }
+  .dec .muted { color: #7388aa; }
+  .foot { margin-top: 8px; display: flex; justify-content: space-between; font-size: 10px; color: #5f7395; }
+</style>
+</head>
+<body>
+<div class="hud">
+  <div class="head">
+    <div class="title">Tactical decision monitor</div>
+    <div class="live wait" id="live">WAITING</div>
+  </div>
+
+  <div class="legend">CARLA lines:<span class="dot lead"></span>lead racing line<span class="dot ego"></span>ego plan</div>
+
+  <div class="action hold" id="actionCard">
+    <div class="act-label" id="action">HOLD</div>
+    <div class="reason" id="reason">等待 live_status.json …</div>
+    <div class="phase" id="phase">–</div>
+  </div>
+
+  <div class="grid">
+    <div class="cell"><div class="k">d_apex</div><div class="v" id="dapex">–<small> m</small></div></div>
+    <div class="cell"><div class="k">gap</div><div class="v" id="gap">–<small> m</small></div></div>
+    <div class="cell"><div class="k">lat sep</div><div class="v" id="sep">–<small> m</small></div></div>
+    <div class="cell"><div class="k">v ego</div><div class="v" id="vego">–<small> m/s</small></div></div>
+    <div class="cell"><div class="k">v lead</div><div class="v" id="vlead">–<small> m/s</small></div></div>
+    <div class="cell"><div class="k">extra cmd</div><div class="v" id="extra">–<small> m</small></div></div>
+  </div>
+
+  <div class="row"><span>Inference latency</span><b id="lat">–</b></div>
+  <div class="row"><span>Stale / shield / pass</span><b id="flags">–</b></div>
+  <div class="row"><span>Sim time</span><b id="tnow">–</b></div>
+
+  <h3>Gap &amp; lateral separation</h3>
+  <canvas id="chart" width="800" height="184"></canvas>
+
+  <h3>LLM decision timeline (raw; control layer may override)</h3>
+  <div class="timeline" id="timeline"></div>
+
+  <div class="foot"><span id="updated">–</span><span>poll 0.25 s</span></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const num = (v, d=2) => (v === null || v === undefined) ? "–" : Number(v).toFixed(d);
+function draw(hist) {
+  const c = $("chart"), dpr = window.devicePixelRatio || 1;
+  const w = c.clientWidth, h = c.clientHeight;
+  if (c.width !== w * dpr || c.height !== h * dpr) { c.width = w * dpr; c.height = h * dpr; }
+  const ctx = c.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  if (!hist || hist.length < 2) return;
+  const t0 = hist[0][0], t1 = Math.max(hist[hist.length - 1][0], t0 + 1);
+  const all = hist.flatMap(p => [Math.abs(p[1]), Math.abs(p[2])]);
+  const ymax = Math.max(25, ...all);
+  const pad = 22;
+  const X = t => pad + (t - t0) / (t1 - t0) * (w - 2 * pad);
+  const Y = v => h - 12 - (v / ymax) * (h - 24);
+  ctx.strokeStyle = "#1a2b4a"; ctx.lineWidth = 1;
+  for (let i = 0; i <= 3; i++) { const y = 12 + i * (h - 24) / 3;
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(w - pad, y); ctx.stroke(); }
+  ctx.strokeStyle = "#7d5bd8"; ctx.setLineDash([4, 4]); ctx.beginPath();
+  ctx.moveTo(pad, Y(2.5)); ctx.lineTo(w - pad, Y(2.5)); ctx.stroke(); ctx.setLineDash([]);
+  const series = [
+    { idx: 1, color: "#ff6b6b", label: "gap" },
+    { idx: 2, color: "#b388ff", label: "|sep|" },
+  ];
+  for (const s of series) {
+    ctx.strokeStyle = s.color; ctx.lineWidth = 2; ctx.beginPath();
+    hist.forEach((p, i) => {
+      const v = Math.abs(p[s.idx]);
+      i ? ctx.lineTo(X(p[0]), Y(v)) : ctx.moveTo(X(p[0]), Y(v));
+    });
+    ctx.stroke();
+  }
+  ctx.fillStyle = "#7388aa"; ctx.font = "10px ui-sans-serif";
+  ctx.fillText("gap", pad + 2, 11); ctx.fillStyle = "#ff6b6b"; ctx.fillRect(pad + 24, 5, 10, 3);
+  ctx.fillStyle = "#7388aa"; ctx.fillText("|sep|", pad + 58, 11);
+  ctx.fillStyle = "#b388ff"; ctx.fillRect(pad + 86, 5, 10, 3);
+  ctx.fillStyle = "#7388aa"; ctx.fillText(ymax.toFixed(0) + " m", pad + 2, h - 2);
+}
+async function tick() {
+  try {
+    const r = await fetch("live_status.json?ts=" + Date.now(), { cache: "no-store" });
+    const s = await r.json();
+    const act = String(s.action || "hold").toLowerCase();
+    $("action").textContent = act === "overtake" ? "OVERTAKE" : "HOLD";
+    $("actionCard").className = "action " + (act === "overtake" ? "overtake" : "hold");
+    $("reason").textContent = s.reason || "–";
+    $("phase").textContent = "phase: " + (s.phase || "–");
+    $("dapex").innerHTML = num(s.d_apex, 0) + "<small> m</small>";
+    $("gap").innerHTML = num(s.gap, 2) + "<small> m</small>";
+    $("sep").innerHTML = num(s.sep, 2) + "<small> m</small>";
+    $("vego").innerHTML = num(s.v_ego, 1) + "<small> m/s</small>";
+    $("vlead").innerHTML = num(s.v_lead, 1) + "<small> m/s</small>";
+    $("extra").innerHTML = num(s.extra_cmd, 2) + "<small> m</small>";
+    $("lat").textContent = (s.latency_s === null || s.latency_s === undefined) ? "–" : Number(s.latency_s).toFixed(3) + " s";
+    $("flags").innerHTML = (s.stale ? '<span class="tag bad">STALE</span>' : '<span class="tag">fresh</span>') +
+      " &nbsp; shield " + (s.shield ?? 0) + " &nbsp; pass " + (s.pass_done ? "yes" : "no");
+    $("tnow").textContent = num(s.t, 2) + " s";
+    $("updated").textContent = "updated " + (s.updated_at || "–");
+    const live = $("live"); live.textContent = "LIVE"; live.className = "live";
+    draw(s.history || []);
+    const tl = $("timeline"); tl.innerHTML = "";
+    (s.decisions || []).slice().reverse().forEach(d => {
+      const div = document.createElement("div");
+      const ov = String(d.action).toLowerCase() === "overtake";
+      div.className = "dec " + (ov ? "ov" : "hd");
+      div.innerHTML = `<span class="muted">${Number(d.t).toFixed(2)}s</span>` +
+        `<b>${ov ? "OVERTAKE" : "HOLD"}</b>` +
+        `<span class="muted">d=${Number(d.d_apex).toFixed(0)}m extra=${d.extra ?? 0}</span>` +
+        `<span>${Number(d.latency).toFixed(2)}s</span>`;
+      tl.appendChild(div);
+    });
+  } catch (e) {
+    const live = $("live"); live.textContent = "WAITING"; live.className = "live wait";
+  }
+}
+tick(); setInterval(tick, 250);
+</script>
+</body>
+</html>

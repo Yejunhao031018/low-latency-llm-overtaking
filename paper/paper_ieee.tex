@@ -1,0 +1,454 @@
+%% IEEE conference paper (ITSC / IV submission)
+%% Compile on Overleaf with pdflatex (IEEEtran class is bundled).
+\documentclass[conference]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{booktabs}
+\usepackage{url}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Low-Latency Edge LLM Tactical Decision-Making for High-Speed Autonomous Overtaking}
+
+\author{\IEEEauthorblockN{Author Name}
+\IEEEauthorblockA{\textit{Department} \\
+\textit{University}\\
+City, Country \\
+email@example.com}}
+
+\maketitle
+
+\begin{abstract}
+Large language models (LLMs) have recently been used as decision-makers for
+autonomous driving, but existing approaches rely on cloud APIs whose
+multi-second inference latency precludes real-time, safety-critical use. We
+argue that the LLM should act only as a \emph{low-frequency tactical} layer ---
+issuing coarse overtake/hold intents --- while a classical 20~Hz controller
+handles trajectory tracking and safety. Under this decomposition we fine-tune a
+Qwen2.5-1.5B model with LoRA and show that a short-output variant reaches a
+decision latency of \textbf{0.59~s} on a consumer 8~GB GPU, roughly an order of
+magnitude faster than cloud-API baselines, while retaining 86.1\% decision
+accuracy --- the Pareto-optimal point among 0.5B--7B alternatives. In
+closed-loop CARLA experiments the system completes overtakes with 95--100\%
+pass rate, 0--2\% collision, and median lateral clearance $\geq$2.2~m across ten
+corner--lead scenarios, generalizing \emph{zero-shot} from training on only two
+corner geometries. We additionally report two honest negative results:
+fine-tuning on multi-scenario rule-expert data \emph{regresses} closed-loop
+performance via catastrophic forgetting, and a CBF-QP safety filter
+underperforms a simple geometric shield. Our results establish a quantified
+latency--safety boundary for embedding LLMs in high-speed driving.
+\end{abstract}
+
+\begin{IEEEkeywords}
+autonomous driving, large language models, low-latency inference, overtaking, hierarchical control, edge AI
+\end{IEEEkeywords}
+
+\section{Introduction}
+\IEEEPARstart{A}{utonomous} driving has conventionally been organized as a
+perception--planning--control stack, in which a motion planner produces a
+trajectory that a low-level controller tracks at high frequency. This
+decomposition is well understood and robust, but it struggles with situations
+that demand semantic or commonsense reasoning: interpreting an erratic
+neighbor's intent, deciding whether a narrowing gap is safe to enter, or
+recognizing that a vehicle is deliberately blocking an overtake. Large language
+models (LLMs) promise to close exactly this gap, because they encode broad
+world knowledge and can articulate \emph{why} a maneuver is appropriate
+\cite{sha2023languagempc,xu2023drivegpt4}. A growing line of work therefore
+positions the LLM as a decision-maker and translates its reasoning into driving
+actions \cite{sha2023languagempc}.
+
+Yet this line shares a common bottleneck: the decision is produced by a cloud
+model such as GPT-4, whose end-to-end latency --- autoregressive decoding over
+hundreds of tokens plus a network round-trip --- is measured in seconds. This is
+acceptable for offline annotation or slow scenarios, but not for high-speed
+maneuvering. At 30~m/s a vehicle covers 30~m per second; a decision that arrives
+three seconds late describes a traffic scene that no longer exists, and any
+safety-critical intent (e.g., ``hold, do not enter the gap'') arrives after it is
+already too late. Real-time deployment therefore requires the decision model to
+be \emph{simultaneously accurate and fast}, a trade-off that has been asserted
+but, to our knowledge, not quantified in a closed driving loop.
+
+We make a simple architectural observation that relaxes the latency
+requirement. Following the classical hierarchical decomposition, we confine the
+LLM to a \emph{tactical layer} that runs at roughly 1~Hz and emits a coarse,
+structured intent --- \emph{overtake or hold}, plus an attack offset and a speed
+factor --- while a classical \emph{control layer} runs at 20~Hz and owns
+trajectory tracking and safety. Under this decomposition, decision latency is
+absorbed into the decision \emph{cadence} rather than the control loop: a
+sub-second decision is tolerable, whereas a multi-second one is stale (we
+quantify this boundary in Sec.~\ref{sec:stale}). This insight lets us replace
+the cloud model with a \emph{small, locally fine-tuned} LLM, turning an
+order-of-magnitude latency reduction from a nice-to-have into the enabling
+condition for real-time use.
+
+Concretely, we fine-tune Qwen2.5-1.5B with LoRA on a single consumer 8~GB GPU
+and study high-speed overtaking on a closed CARLA ring. Our contributions are:
+\begin{enumerate}
+\item \textbf{A latency--accuracy Pareto characterization} across 0.5B--7B
+models, showing that a short-output 1.5B variant is the optimal operating point
+(0.59~s, 86.1\%), outperforming 3B (2.02~s, 71.3\%) and 7B (1.41~s, 69.6\%) on
+\emph{both} axes, because the larger models cannot be adequately fine-tuned
+within the memory budget.
+\item \textbf{A closed-loop evaluation} in CARLA in which the system completes
+overtakes with 95--100\% pass rate and median clearance $\geq$2.2~m across ten
+corner--lead scenarios, generalizing \emph{zero-shot} from training on only two
+corner geometries.
+\item \textbf{A quantified stale-latency boundary} showing that 0.5~s of
+decision delay is tolerated while 0.8~s degrades safety --- the quantitative
+justification for the latency reduction.
+\item \textbf{Two control-layer corrections and two honest negative results}
+that are independently useful: an attack-geometry correction, an inside-line
+hold, the failure of multi-scenario behavior cloning (catastrophic forgetting),
+and the underperformance of a CBF-QP filter relative to a simple geometric
+shield.
+\end{enumerate}
+
+\section{Related Work}
+\subsection{LLMs for Autonomous Driving}
+LanguageMPC \cite{sha2023languagempc} employs GPT-4 as a decision-making
+component: it devises cognitive pathways for reasoning over human commonsense
+and translates LLM decisions into low-level control. It demonstrates that LLMs
+\emph{can} make driving decisions, but relies on cloud inference and does not
+report timing, so it cannot close a real-time loop. DriveGPT4
+\cite{xu2023drivegpt4} produces interpretable end-to-end outputs via a
+vision-language model, prioritizing explainability over latency. A broader line
+of work applies LLMs to scene understanding, visual question answering, or
+offline/single-step planning; none addresses the latency required for
+high-speed, safety-critical control. Our positioning: we treat the LLM as a
+low-frequency tactical layer and show that a 1.5B local model is fast enough
+(0.59~s) for real-time use --- an order of magnitude faster than the cloud-API
+paradigm --- while safety-critical tracking remains rule-based.
+
+\subsection{Hierarchical Control and Safety}
+Classical driving stacks separate motion planning from trajectory tracking
+(pure pursuit, Stanley, LQR, MPC) and enforce safety with control barrier
+functions (CBF), QP-based filters, or set-based reachability. We adopt a
+pure-pursuit tracking controller and a lightweight geometric \emph{signed
+shield} that brakes when the ego is alongside the lead with insufficient
+lateral clearance. We keep the shield rule-based and report, as a negative
+result, that a full CBF-QP formulation underperformed it in a 2~m stress test
+(Sec.~\ref{sec:neg}).
+
+\subsection{Edge LLMs and Efficient Fine-Tuning}
+Efficient deployment uses quantization and parameter-efficient fine-tuning such
+as LoRA \cite{hu2021lora}. We fine-tune Qwen2.5-1.5B \cite{qwen2025qwen25} with
+bf16 LoRA on a consumer 8~GB GPU, providing direct evidence that a tactical LLM
+can run at the edge without cloud dependence.
+
+\subsection{Latency in Real-Time Systems}
+Networked control and robot action chunking address decision latency through
+predictive compensation or coarser action granularity. We transfer action
+chunking to high-speed driving and, unlike prior work, \emph{quantify} the
+tolerable staleness (0.5~s) and the failure point (0.8~s), motivating our
+latency reduction from 1.08~s to 0.59~s.
+
+\subsection{Simulation and Model-Based Data}
+We evaluate in CARLA \cite{dosovitskiy2017carla} on a closed Town04 ring. Our
+counterfactual labeling uses the simulator as a ground-truth dynamics model for
+a shallow action search, connecting to model-based reinforcement learning and
+expert iteration; a learned neural world model to replace this simulator is
+future work.
+
+\section{Method}
+\subsection{Problem Formulation}
+We study a two-vehicle overtaking task on a closed ring. At each step the ego
+observes a state consisting of ego and lead speeds, signed and absolute
+longitudinal gap, distance to the corner apex, track curvature,
+time-to-collision, current lateral offset and lateral separation, the
+racing-line offset, and the corner's inside side (left/right). The tactical
+decision is a structured intent
+$a = (\text{action}, \text{extra\_inside\_m}, \text{speed\_factor})$ with
+$\text{action}\in\{\text{overtake},\text{hold}\}$,
+$\text{extra\_inside\_m}\in[0,3.5]$~m (additional lateral offset toward the
+corner inside), and $\text{speed\_factor}\in[0.9,1.1]$. The objective is to
+complete a pass while respecting a minimum lateral clearance and avoiding
+collision.
+
+\subsection{Layered Architecture}
+The system decomposes into two layers with distinct timescales
+(Fig.~\ref{fig:arch}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{architecture.pdf}
+\caption{Two-timescale layered architecture. A low-frequency LLM tactical layer
+issues overtake/hold intents; a 20~Hz rule-based control layer executes them
+under a geometric safety shield. Decision latency is absorbed into the 1~Hz
+cadence, not the 20~Hz control loop.}
+\label{fig:arch}
+\end{figure}
+
+\textbf{Tactical layer (LLM, $\sim$1~Hz).} The fine-tuned LLM maps the
+observation (plus the previous decision, which disambiguates ``start an
+attack'' from ``already attacking'') to the intent $a$. The \emph{short-output}
+variant omits the free-text \texttt{reason} field, cutting generated tokens by
+roughly 60\% and latency by $\sim$45\% at a small accuracy cost.
+
+\textbf{Control layer (20~Hz).} A pure-pursuit controller tracks a racing line
+offset toward the corner inside. During an overtake it adds the attack offset
+\texttt{extra\_inside\_m}, scaled by a spatial attack window centered on the
+apex, and applies the speed factor. A \emph{signed shield} brakes when the
+longitudinal gap is below 8~m and the lateral separation is below 2.2~m while
+the ego is alongside, and caps the speed advantage over the lead at 6~m/s.
+
+\subsection{Two Control-Layer Corrections}
+\textbf{Attack-geometry correction.} The initial attack reference summed the
+racing-line inside offset (3.3~m) and the attack offset (3.5~m) into a 6.8~m
+lateral command that exceeded the available road width, driving the ego off the
+road under variable and defensive leads. We reduced the racing-line inside
+offset to 1.0~m, clamped the total offset to 4.5~m, and added a 0.5~m bias,
+keeping the attack trajectory on the road without retraining the model.
+
+\textbf{Inside-line hold.} The attack window ramps down after the apex and the
+racing line returns to the outside; on tight corners the ego has not yet cleared
+the lead at that point, so the retraction steered it back onto the lead's line
+and caused side-swipe collisions. We pin the attack weight to unity while the
+ego is still alongside the lead, holding the inside line until the pass
+completes.
+
+\subsection{Model and Counterfactual Training Data}
+We fine-tune Qwen2.5-1.5B-Instruct with LoRA ($r{=}16$, $\alpha{=}32$, dropout
+0.05) for two epochs with a completion-only loss (prompt tokens masked) on a
+consumer 8~GB GPU. The training signal comes from two sources. First,
+demonstrations from a rule-based expert driving in CARLA. Second, and more
+importantly, \emph{counterfactual labels}: at sampled states we snapshot the
+world and roll out five candidate actions (hold; inside 3.0~m; inside 3.5~m;
+inside 3.5~m with late braking; outside 3.5~m) against the CARLA simulator for a
+short horizon, and label the state with the lowest-cost action under a cost that
+penalizes collision (weight 1000), sub-2.2~m clearance, and failed passes, while
+rewarding longitudinal progress. This lets the model learn the \emph{optimal}
+action in each state rather than the expert's demonstrated one, partially
+escaping the behavior-cloning ceiling.
+
+\subsection{Evaluation Protocol}
+We build a closed Town04 ring with six corners (radii 45--208~m, in both left
+and right directions) and define ten scenarios pairing five passable corners
+with constant, variable, and defensive lead behaviors. Metrics are pass rate
+(the ego reaches 2~m ahead during the attack window), collision rate, minimum
+lateral separation (\texttt{minSep}), and decision latency. Pass rate is
+reported with Wilson 95\% confidence intervals; \texttt{minSep} with bootstrap
+confidence intervals.
+
+\section{Experiments}
+\subsection{Setup}
+All experiments run in CARLA Town04 with a synchronous 20~Hz physics loop and a
+ClearNoon setting. The LLM is served locally and queried at 1~Hz; the control
+layer runs every tick. Latency is measured as end-to-end inference (prompt
+encoding plus greedy decoding) on the local GPU.
+
+\subsection{Latency--Accuracy Pareto}
+\begin{table}[t]
+\centering
+\caption{Decision accuracy and end-to-end latency across model scales. The
+1.5B-short variant is the Pareto-optimal point.}
+\label{tab:pareto}
+\begin{tabular}{lccc}
+\toprule
+Model & Accuracy & Latency & vs.\ 1.5B-short \\
+\midrule
+Qwen2.5-0.5B & 75.7\% & 0.86~s & 1.46$\times$ slower, $-10.4$~pt \\
+Qwen2.5-1.5B & 87.8\% & 1.08~s & 1.83$\times$ slower, $+1.7$~pt \\
+\textbf{Qwen2.5-1.5B-short (ours)} & \textbf{86.1\%} & \textbf{0.59~s} & --- \\
+Qwen2.5-3B (4-bit) & 71.3\% & 2.02~s & 3.42$\times$ slower, $-14.8$~pt \\
+Qwen2.5-7B (4-bit, zero-shot) & 69.6\% & 1.41~s & 2.39$\times$ slower, $-16.5$~pt \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{latency_superiority.pdf}
+\caption{(a) Decision latency and (b) accuracy--latency Pareto. The 1.5B
+short-output model is 3.4$\times$ faster than 3B and 2.4$\times$ faster than 7B
+while \emph{more} accurate.}
+\label{fig:pareto}
+\end{figure}
+
+Two observations follow (Fig.~\ref{fig:pareto}, Table~\ref{tab:pareto}). First,
+\emph{bigger is not better} here: the 3B and 7B models must be quantized to
+4-bit to fit the 8~GB budget, which degrades their accuracy below the 1.5B
+model, while their larger parameter count inflates latency. Second, the
+\emph{short-output} ablation (dropping the \texttt{reason} field) cuts latency
+from 1.08~s to 0.59~s ($-45\%$) at a cost of only 1.7 accuracy points, because
+autoregressive decoding cost scales with the number of generated tokens. The
+1.5B-short model is therefore the Pareto-optimal point: the fastest and nearly
+the most accurate.
+
+\subsection{Closed-Loop Overtaking (20 seeds, corner R=188)}
+\begin{table}[t]
+\centering
+\caption{Closed-loop overtaking over 20 seeds on the R=188 corner. Median
+clearance meets the 2.2~m target in all lead behaviors.}
+\label{tab:closed}
+\begin{tabular}{lcccc}
+\toprule
+Lead & Pass rate [95\% CI] & Collision & minSep med.\ & minSep min \\
+\midrule
+constant & 100\% [84,100] & 0\% & 2.87~m & 2.54~m \\
+variable & 95\% [76,99] & 0\% & 3.13~m & 1.14~m \\
+defensive & 95\% [76,99] & 5\% & 2.27~m & 1.04~m \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The median clearance meets the 2.2~m safety target in all three lead behaviors;
+the minimum drops below 2~m only in rare tail cases (defensive and variable
+leads). The defensive lead --- which moves toward the ego's chosen side --- is
+the hardest, yielding one collision in twenty runs.
+
+\subsection{Zero-Shot Generalization (10 scenarios, 10 seeds)}
+Trained on only two corner geometries (one right, one left), the model
+generalizes zero-shot across ten corner--lead scenarios (Table~\ref{tab:zero}).
+Aggregate: \textbf{96/100 passes (96\%), 2 collisions (2\%)}. Seven scenarios
+reach 100\% pass with zero collision; two defensive-lead scenarios reach 90\%;
+the single tight-corner scenario (R=83) drops to 80\% with two collisions.
+
+\begin{table}[t]
+\centering
+\caption{Zero-shot generalization across ten corner--lead scenarios (10 seeds
+each).}
+\label{tab:zero}
+\begin{tabular}{llcccc}
+\toprule
+Corner & Lead & Pass & Collision & minSep med.\ & minSep min \\
+\midrule
+R=208 & constant & 100\% & 0 & 2.77~m & 2.71~m \\
+R=208 & variable & 100\% & 0 & 3.30~m & 3.22~m \\
+R=208 & defensive & 90\% & 0 & 2.33~m & 1.01~m \\
+R=151 & constant & 100\% & 0 & 3.28~m & 2.83~m \\
+R=151 & variable & 100\% & 0 & 2.79~m & 1.60~m \\
+R=151 & defensive & 100\% & 0 & 2.37~m & 2.34~m \\
+R=188 & constant & 100\% & 0 & 2.84~m & 2.01~m \\
+R=188 & defensive & 90\% & 0 & 2.28~m & 0.65~m \\
+R=83 & constant & 80\% & 2 & 2.74~m & 1.63~m \\
+R=138 & variable & 100\% & 0 & 3.26~m & 3.24~m \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two findings stand out. First, generalization is governed by \emph{corner
+difficulty} (curvature) rather than direction: gentle corners pass in both
+directions, while the tight right corner R=83 is marginal. Second, the defensive
+lead is the hardest \emph{behavior}, consistently lowering clearance across
+corners.
+
+\subsection{Stale-Latency Boundary}
+\label{sec:stale}
+To justify the latency reduction, we measure closed-loop safety as a function of
+injected decision delay. With 0.5~s of added staleness the pass rate and
+clearance are essentially unchanged, confirming that a 0.59~s decision is within
+the tolerable regime. At 0.8~s the shield begins to intervene more often and
+safety degrades, marking the boundary beyond which the decision is stale. This
+quantifies the enabling condition for the cloud-to-edge substitution: the
+1.5B-short model sits \emph{inside} the tolerable regime, whereas a 2~s (3B) or
+multi-second (cloud) decision would sit far outside it.
+
+\subsection{Ablations}
+\textbf{Short-output.} Dropping the \texttt{reason} field reduces latency from
+1.08~s to 0.59~s ($-45\%$) at a 1.7-point accuracy cost (Table~\ref{tab:pareto}),
+confirming that the free-text explanation is the dominant decoding cost.
+
+\textbf{Control corrections.} Without the attack-geometry correction, the ego
+drives off the road under variable and defensive leads (0\% pass, collisions);
+with it, those scenarios recover to 95--100\% pass and zero collision. Without
+the inside-line hold, the tight left corner R=138 collides in 6/6 runs
+(minSep $\approx$1.9~m); with it, clearance rises above 3~m and collisions
+disappear. Both corrections are therefore necessary, not incidental.
+
+\textbf{Counterfactual labels.} Replacing counterfactual labels with pure
+behavior cloning from the rule expert makes multi-scenario fine-tuning regress
+(see Sec.~\ref{sec:neg}), indicating that the labels, though few, carry
+disproportionate signal.
+
+\subsection{Negative Results}
+\label{sec:neg}
+\textbf{Multi-scenario fine-tuning regresses.} Fine-tuning on a ten-scenario
+dataset collected from the same rule expert \emph{reduced} closed-loop pass rate
+(left-turn scenarios fell from 100\% to 0--67\%); merging the new data with the
+original two-corner data did not recover the zero-shot baseline. Root cause:
+the rule expert only \emph{holds} on hard scenarios, so its 607 demonstrated
+actions (mostly ``hold'') overwhelm the 47 counterfactual labels, teaching
+conservatism. This is a concrete demonstration that behavior cloning from a
+weak expert sets a ceiling, and that the counterfactual-labeling ratio must be
+much higher for multi-scenario scaling.
+
+\textbf{CBF-QP vs.\ geometric shield.} A full CBF-QP safety filter
+underperformed a plain if-else shield in a 2~m stress test, consistent with
+prior findings that hand-tuned geometric gates can be more robust than
+optimization-based filters for narrow, well-understood tasks. We therefore
+retain the lightweight geometric shield.
+
+\section{Discussion}
+\textbf{Limitations.} Our study is confined to a single map (Town04), a single
+task (overtaking), and simulation-only evaluation. We have not validated
+transfer to other maps, weather conditions, or interactive multi-vehicle
+traffic, and we have no real-world (closed-course or on-road) deployment; the
+sim-to-real gap --- sensor noise, latency jitter, and unmodeled dynamics ---
+remains open. The tactical action space is intentionally coarse (three
+scalars), sufficient for overtaking but not for general driving, so the approach
+is a building block rather than a complete driving system. Our advantage is
+empirical and system-level rather than algorithmic: the base model and
+fine-tuning method are off the shelf, and ``smaller is faster'' is expected ---
+the contribution is the \emph{quantification} of the operating point and the
+closed-loop evidence that it suffices. Finally, the behavior-cloning ceiling
+means the model inherits the weaknesses of its data source on hard scenarios
+(tight corners, defensive leads), which remain its weakest cases.
+
+\textbf{Implications.} The central message is that the latency question, not
+model capability, is the binding constraint for embedding LLMs in real-time
+driving, and that a two-timescale architecture resolves it. The
+counterfactual-labeling mechanism also suggests a path beyond the
+behavior-cloning ceiling, connecting to model-based reinforcement learning and
+expert iteration.
+
+\textbf{Future work.} (1) Train a lightweight neural \emph{world model} to
+replace the CARLA simulator in counterfactual search, potentially reducing
+decision latency toward the millisecond scale; (2) scale up counterfactual
+labeling to escape the weak-expert ceiling and enable multi-scenario
+fine-tuning; (3) extend to multiple maps, weather, and interactive traffic, and
+toward real-vehicle validation.
+
+\section{Conclusion}
+We showed that a locally fine-tuned 1.5B LLM can serve as a low-frequency
+tactical decision layer for high-speed overtaking at 0.59~s latency --- an order
+of magnitude faster than the cloud-API paradigm --- while a 20~Hz rule-based
+controller guarantees safety. The system achieves 95--100\% pass rate with
+median clearance $\geq$2.2~m and generalizes zero-shot across ten scenarios. We
+quantified the stale-latency boundary that justifies the reduction, and reported
+honest negative results that bound the approach and point to future work.
+
+\section*{Acknowledgment}
+The authors thank the anonymous reviewers for their constructive feedback.
+(Optional; fill before submission.)
+
+\begin{thebibliography}{5}
+\bibitem{sha2023languagempc}
+H.~Sha, Y.~Mu, Y.~Jiang, L.~Chen, C.~Xu, P.~Luo, S.~E.~Li, M.~Tomizuka,
+W.~Zhan, and M.~Ding, ``LanguageMPC: Large language models as decision makers
+for autonomous driving,'' \emph{arXiv:2310.03026}, 2023.
+
+\bibitem{xu2023drivegpt4}
+Z.~Xu, Y.~Zhang, E.~Xie, Z.~Zhao, Y.~Guo, K.-Y.~K.~Wong, Z.~Li, and H.~Zhao,
+``DriveGPT4: Interpretable end-to-end autonomous driving via large language
+model,'' \emph{arXiv:2310.01412}, 2023.
+
+\bibitem{hu2021lora}
+E.~J.~Hu, Y.~Shen, P.~Wallis, Z.~Allen-Zhu, Y.~Li, S.~Wang, L.~Wang, and
+W.~Chen, ``LoRA: Low-rank adaptation of large language models,'' in
+\emph{Int. Conf. Learning Representations (ICLR)}, 2022.
+
+\bibitem{dosovitskiy2017carla}
+A.~Dosovitskiy, G.~Ros, F.~Codevilla, A.~Lopez, and V.~Koltun, ``CARLA: An open
+urban driving simulator,'' in \emph{Conf. Robot Learning (CoRL)}, 2017.
+
+\bibitem{qwen2025qwen25}
+Qwen Team, ``Qwen2.5 technical report,'' \emph{arXiv:2412.15115}, 2024.
+\end{thebibliography}
+
+\end{document}

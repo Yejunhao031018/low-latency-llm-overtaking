@@ -1,0 +1,11 @@
+# Use a separate Python 3.10+ environment, NOT the CARLA py3.8 venv.
+# RTX 5060 (Blackwell) needs a recent CUDA 12.8 wheel; install torch first
+# from https://pytorch.org/get-started/locally/ if the line below picks an
+# incompatible build.
+torch>=2.7
+transformers>=4.45
+peft>=0.12
+trl>=0.12
+datasets>=2.20
+accelerate>=0.34
+bitsandbytes>=0.43

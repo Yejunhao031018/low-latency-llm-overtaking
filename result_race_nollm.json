@@ -1,0 +1,40 @@
+{
+  "map": "Carla/Maps/Town04",
+  "ring_len_m": 3028,
+  "turn2": {
+    "s0": 562,
+    "s1": 814,
+    "apex": 688,
+    "R": 151,
+    "dir": "R",
+    "inside_sign": 1.0
+  },
+  "line_at_apex": {
+    "racing_off_m": 3.25,
+    "ego_off_m": 6.75,
+    "extra_inside_m": 3.5
+  },
+  "pass_at_turn2": true,
+  "pass_time_s": 15.55,
+  "pass_s": 658.1,
+  "final_gap_m": 59.6,
+  "max_ego_speed": 38.35,
+  "min_gap_m": 0.0,
+  "min_center_dist_m": 3.72,
+  "collisions": {
+    "ego": 0,
+    "lead": 0
+  },
+  "llm": {
+    "enabled": false,
+    "backend": null,
+    "decisions": []
+  },
+  "lap_completed": true,
+  "lap_time_s": 103.25,
+  "lap_frac": 1.0,
+  "frames": {
+    "bird": 86,
+    "front": 86
+  }
+}

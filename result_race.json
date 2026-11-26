@@ -1,0 +1,1972 @@
+{
+  "map": "Carla/Maps/Town04",
+  "ring_len_m": 3028,
+  "turn2": {
+    "s0": 676,
+    "s1": 908,
+    "apex": 792,
+    "R": 138,
+    "dir": "R",
+    "inside_sign": 1.0
+  },
+  "shield_interventions": 0,
+  "line_at_apex": {
+    "racing_off_m": 3.24,
+    "ego_off_m": 6.74,
+    "extra_inside_m": 3.5
+  },
+  "pass_at_turn2": true,
+  "pass_time_s": 18.7,
+  "pass_s": 810.0,
+  "final_gap_m": 12.5,
+  "max_ego_speed": 38.24,
+  "min_gap_m": 0.0,
+  "min_center_dist_m": 3.44,
+  "collisions": {
+    "ego": 0,
+    "lead": 0
+  },
+  "llm": {
+    "enabled": true,
+    "backend": "lora",
+    "decisions": [
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 0.05
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 0.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 1.1
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 1.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 2.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 2.7
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 3.25
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 3.8
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 4.35
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 4.9
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 5.45
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 6.0
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 6.55
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 7.1
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 7.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 8.15
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 8.65
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 9.15
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 9.65
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 10.15
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 10.65
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 11.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 11.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 12.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 12.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 13.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 13.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 14.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 14.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 15.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 15.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 16.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 16.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 17.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 17.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 18.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 18.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 19.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 19.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 20.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 20.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 21.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 21.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 22.15
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 22.65
+      },
+      {
+        "action": "overtake",
+        "blocked": false,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "",
+        "backend": "lora",
+        "t": 23.15
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 23.65
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 24.15
+      },
+      {
+        "action": "hold",
+        "blocked": true,
+        "extra_inside_m": 3.5,
+        "target_offset_m": -3.5,
+        "speed_factor": 1.05,
+        "reason": "outside decision window -> hold; ",
+        "backend": "lora",
+        "t": 24.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 25.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 25.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 26.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 26.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 27.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 27.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 28.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 28.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 29.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 29.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 30.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 30.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 31.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 31.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 32.2
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 32.75
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 33.3
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 33.85
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 34.4
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 34.95
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 35.5
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 36.05
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 36.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 37.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 37.7
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 38.25
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 38.8
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 39.35
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 39.9
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 40.45
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 41.0
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 41.55
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 42.1
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 42.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 43.2
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 43.75
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 44.3
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 44.85
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 45.4
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 45.95
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 46.5
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 47.05
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 47.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 48.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 48.7
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 49.25
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 49.8
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 50.35
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 50.9
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 51.45
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 52.0
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 52.55
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 53.1
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 53.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 54.2
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 54.75
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 55.3
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 55.85
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 56.4
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 56.95
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 57.5
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 58.05
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 58.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 59.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 59.7
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 60.25
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 60.8
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 61.35
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 61.9
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 62.45
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 63.0
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 63.55
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 64.1
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 64.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 65.2
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 65.75
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 66.3
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 66.85
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 67.4
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 67.95
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 68.5
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 69.05
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 69.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 70.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 70.7
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 71.25
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 71.8
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 72.35
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 72.9
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 73.45
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 74.0
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 74.55
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 75.1
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 75.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 76.2
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 76.75
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 77.3
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 77.85
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 78.4
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 78.95
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 79.5
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 80.05
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 80.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 81.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 81.7
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 82.25
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 82.8
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 83.35
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 83.9
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 84.45
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 85.0
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 85.55
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 86.1
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 86.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 87.2
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 87.75
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 88.3
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 88.85
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 89.4
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 89.95
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 90.5
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 91.05
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 91.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 92.15
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 92.7
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 93.25
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 93.8
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 94.35
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 94.9
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 95.45
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 96.0
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 96.55
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 97.1
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 97.65
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 98.2
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 98.75
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 99.3
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 99.85
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 100.4
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 100.95
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 101.5
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 102.05
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 102.6
+      },
+      {
+        "action": "hold",
+        "blocked": false,
+        "extra_inside_m": 0.0,
+        "target_offset_m": 0.0,
+        "speed_factor": 1.0,
+        "reason": "",
+        "backend": "lora",
+        "t": 103.15
+      }
+    ]
+  },
+  "lap_completed": true,
+  "lap_time_s": 103.4,
+  "lap_frac": 1.0,
+  "frames": {
+    "bird": 86,
+    "front": 86
+  }
+}

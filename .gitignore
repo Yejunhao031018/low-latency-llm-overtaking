@@ -1,0 +1,50 @@
+# Models, checkpoints, datasets (large, not for git)
+models/
+checkpoints/
+dataset/
+frames/
+frames_race/
+deps/
+results/
+
+# Raw outputs and logs
+*.log
+*.csv
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Local scratch / internal working notes (not part of the public repo)
+RESUME.md
+MORNING_SUMMARY.md
+NIGHT_LOG.md
+NIGHT_PLAN.md
+HANDOFF.md
+PLAN_10SCENES.md
+PAPER_DRAFT.md
+PAPER_PLAN_V2.md
+CONTROL_EXPERIMENTS.md
+COUPLED_MPC.md
+LATENCY_EXPERIMENT.md
+paper_abstract.md
+paper_intro.md
+paper_method.md
+paper_experiments.md
+paper_related.md
+paper_reproduce.md
+paper_final.md
+paper_outline.md
+paper/outline.md
+paper/technical_route.md
+paper/experiment_matrix.md
+paper/README.md

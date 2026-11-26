@@ -1,0 +1,22 @@
+{
+  "map": "Carla/Maps/Town04",
+  "road_id": 40,
+  "lane": -4,
+  "lane_offset_m": 3.500000284062858,
+  "duration_s": 16.75,
+  "passed": true,
+  "max_lateral_offset_m": 3.516,
+  "min_center_gap_m": 3.5,
+  "max_speed_mps": 12.5,
+  "phases": [
+    "APPROACH",
+    "LANE_CHANGE_LEFT",
+    "PASS",
+    "LANE_CHANGE_RIGHT",
+    "DONE"
+  ],
+  "frames": {
+    "bird": 21,
+    "front": 21
+  }
+}
