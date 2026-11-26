@@ -160,11 +160,12 @@
     <h2>Live Decision Process</h2>
     <p class="sec-sub">Watch the LLM decide in real time. The HUD shows the model's actual JSON intent — <i>hold</i> then <i>overtake</i> — issued at 1&nbsp;Hz with 0.59&nbsp;s latency.</p>
     <div class="card">
-      <div class="fig"><img src="assets/overtake_hud.gif" alt="overtake with decision HUD" style="max-width:560px;"><div class="cap">The model switches from <b>HOLD</b> to <b>OVERTAKE</b> at t≈11.7 s, then completes the pass at t≈18.7 s.</div></div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
-        <div class="fig"><img src="assets/decision_timeline.png" alt="decision timeline"><div class="cap">Decision timeline: attack offset (green) and inside-line flag (amber).</div></div>
-        <div class="fig"><img src="assets/overtake_sequence.png" alt="overtake sequence"><div class="cap">Bird's-eye overtake sequence.</div></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+        <div class="fig"><img src="assets/overtake_hud.gif" alt="overtake with decision HUD"><div class="cap"><b>Bird's-eye</b> · the model switches from <b>HOLD</b> to <b>OVERTAKE</b> at t≈11.7 s.</div></div>
+        <div class="fig"><img src="assets/overtake_front_hud.gif" alt="front view with decision HUD"><div class="cap"><b>Driver view</b> · the lead car ahead, with the live decision HUD.</div></div>
       </div>
+      <div class="fig" style="margin-top:22px;"><img src="assets/decision_timeline.png" alt="decision timeline"><div class="cap">Decision timeline: attack offset (green) and inside-line flag (amber).</div></div>
+      <div class="fig" style="margin-top:22px;"><img src="assets/overtake_sequence.png" alt="overtake sequence"><div class="cap">Bird's-eye overtake sequence (approach → inside pass → clear).</div></div>
     </div>
   </section>
 

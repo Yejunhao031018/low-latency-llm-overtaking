@@ -45,15 +45,18 @@ def main():
     offsets = [-5, -2, 0, 2, 5, 8]  # in frame indices
     idx = [max(0, min(n - 1, center + o)) for o in offsets]
     labels = ["%.1f s" % (i * FRAME_DT) for i in idx]
+    phases = ["approach", "approach", "alongside", "pass", "clear", "clear"]
 
     imgs = [Image.open(birds[i]).convert("RGB") for i in idx]
 
-    fig, axes = plt.subplots(1, 6, figsize=(14.4, 2.6), dpi=180)
-    for ax, im, lab in zip(axes, imgs, labels):
+    # 2 rows x 3 columns (balanced aspect), with phase labels
+    fig, axes = plt.subplots(2, 3, figsize=(9.6, 5.2), dpi=180)
+    for ax, im, lab, phase in zip(axes.flat, imgs, labels, phases):
         ax.imshow(im)
         ax.axis("off")
-        ax.set_title(lab, fontsize=11, fontweight="bold", color="#1e293b", pad=3)
-    fig.tight_layout(pad=0.3)
+        ax.set_title(f"t = {lab}   ·   {phase}", fontsize=10.5,
+                     fontweight="bold", color="#0f172a", pad=4)
+    fig.tight_layout(pad=0.5)
     os.makedirs("results/media", exist_ok=True)
     fig.savefig("results/media/overtake_sequence.png", bbox_inches="tight",
                 facecolor="white", dpi=180)
@@ -61,7 +64,7 @@ def main():
                 facecolor="white")
     fig.savefig("results/media/overtake_sequence.svg", bbox_inches="tight",
                 facecolor="white")
-    print("saved overtake_sequence.png/.pdf/.svg")
+    print("saved overtake_sequence.png/.pdf/.svg (2x3 grid)")
 
 if __name__ == "__main__":
     main()
