@@ -280,6 +280,20 @@ autoregressive decoding cost scales with the number of generated tokens. The
 1.5B-short model is therefore the Pareto-optimal point: the fastest and nearly
 the most accurate.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{latency_comparison.pdf}
+\caption{Decision latency and distance traveled at 30~m/s. Our 1.5B-short
+model responds in 0.59~s ($\approx$18~m); a cloud GPT-4 decision arrives after
+$\approx$105~m --- by which time the traffic scene has changed.}
+\label{fig:latcomp}
+\end{figure}
+
+Fig.~\ref{fig:latcomp} makes the latency advantage concrete: at 30~m/s, the
+0.59~s decision is 18~m of travel, whereas a cloud-API decision (3--4~s)
+corresponds to roughly 100~m. The 1.5B-short model therefore operates
+\emph{inside} the tolerable regime established in Sec.~\ref{sec:stale}.
+
 \subsection{Closed-Loop Overtaking (20 seeds, corner R=188)}
 \begin{table}[t]
 \centering
@@ -297,10 +311,31 @@ defensive & 95\% [76,99] & 5\% & 2.27~m & 1.04~m \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{overtake_sequence.pdf}
+\caption{A closed-loop overtake: bird's-eye snapshots from the LLM-driven demo.
+The ego (blue) initiates the inside pass at $t{\approx}11.7$~s and clears the
+lead (red) by $t{\approx}18.7$~s.}
+\label{fig:sequence}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{decision_timeline.pdf}
+\caption{Real-time LLM decisions during the overtake: the attack offset
+(\texttt{extra\_inside\_m}, green) and the inside-line flag (amber). The model
+switches from \texttt{hold} to \texttt{overtake} at $t{=}11.7$~s and completes
+the pass at $t{=}18.7$~s.}
+\label{fig:timeline}
+\end{figure}
+
 The median clearance meets the 2.2~m safety target in all three lead behaviors;
 the minimum drops below 2~m only in rare tail cases (defensive and variable
 leads). The defensive lead --- which moves toward the ego's chosen side --- is
-the hardest, yielding one collision in twenty runs.
+the hardest, yielding one collision in twenty runs. Fig.~\ref{fig:sequence} and
+Fig.~\ref{fig:timeline} visualize a representative closed-loop overtake and the
+underlying decision process.
 
 \subsection{Zero-Shot Generalization (10 scenarios, 10 seeds)}
 Trained on only two corner geometries (one right, one left), the model

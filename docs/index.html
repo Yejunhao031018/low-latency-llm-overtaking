@@ -133,6 +133,22 @@
   </section>
 
   <section>
+    <h2>Latency Advantage</h2>
+    <p class="sec-sub">The core contribution: <b style="color:#5eead4">0.59 s</b> decisions vs. multi-second cloud LLMs. At 30&nbsp;m/s, a decision's delay is distance traveled before the car reacts.</p>
+    <div class="card fig"><img src="assets/latency_comparison.png" alt="latency comparison"><div class="cap">Decision latency and distance traveled at 30&nbsp;m/s. Our 1.5B-short model responds in 0.59&nbsp;s (~18&nbsp;m); a cloud GPT-4 decision arrives after ~105&nbsp;m.</div></div>
+  </section>
+
+  <section>
+    <h2>Live Decision Process</h2>
+    <p class="sec-sub">Watch the LLM decide in real time. The HUD shows the model's actual JSON intent at each moment — <i>hold</i> then <i>overtake</i> — issued at 1&nbsp;Hz with 0.59&nbsp;s latency.</p>
+    <div class="card fig"><img src="assets/overtake_hud.gif" alt="overtake with decision HUD" style="max-width:560px;"><div class="cap">Animated overtake with the live decision HUD: the model switches from <b>HOLD</b> to <b>OVERTAKE</b> at t≈11.7 s, then completes the pass.</div></div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+      <div class="card fig"><img src="assets/decision_timeline.png" alt="decision timeline"><div class="cap">Decision timeline: the attack offset (green) and inside-line flag (amber) over time.</div></div>
+      <div class="card fig"><img src="assets/overtake_sequence.png" alt="overtake sequence"><div class="cap">Bird's-eye overtake sequence (t = 5.2 s → 20.6 s).</div></div>
+    </div>
+  </section>
+
+  <section>
     <h2>Demo</h2>
     <p class="sec-sub">Closed-loop overtaking in CARLA Town04. <b style="color:#5eead4">LLM-driven</b> (our model) vs. a <b style="color:#fbbf24">rule-based stub</b> baseline. Blue = ego, red = lead.</p>
     <div class="grid2">

@@ -408,7 +408,7 @@ def main():
 
     def make_cb(name):
         def _cb(image):
-            if image.frame % 24 != 0:
+            if image.frame % 6 != 0:
                 return
             image.save_to_disk(os.path.join(FRAMES, "%s_%03d.png" % (name, frames[name])))
             frames[name] += 1
