@@ -4,7 +4,7 @@ A 1.5B local large language model (Qwen2.5 + LoRA) that decides *overtake or hol
 in **0.59 s** — an order of magnitude faster than cloud-API LLMs — while a 20 Hz
 rule-based controller keeps the maneuver safe. Evaluated in closed-loop CARLA.
 
-> **Website**: see [`site/index.html`](site/index.html) (or GitHub Pages)
+> **Website**: [`docs/index.html`](docs/index.html) (GitHub Pages)
 > **Paper**: [`paper/paper_ieee.tex`](paper/paper_ieee.tex) (IEEE conference format)
 
 ## Key Results
@@ -32,7 +32,7 @@ decision *cadence*, so a sub-second decision is tolerable and a multi-second
 (cloud) one is stale.
 
 <div align="center">
-  <img src="site/assets/architecture.png" alt="architecture" width="720">
+  <img src="docs/assets/architecture.png" alt="architecture" width="720">
 </div>
 
 ## Repository Layout
@@ -42,9 +42,9 @@ decision *cadence*, so a sub-second decision is tolerable and a multi-second
 │   ├── paper_ieee.tex        # IEEE conference paper (ITSC/IV)
 │   ├── references.bib        # BibTeX references
 │   └── figures/              # vector figures (PDF/SVG)
-├── site/
-│   ├── index.html            # project website
-│   └── assets/               # videos, figures, keyframes
+├── docs/
+│   ├── index.html            # project website (GitHub Pages)
+│   └── assets/               # videos, GIFs, figures
 ├── finetune/                 # LoRA training + serving + eval
 ├── results/                  # benchmark outputs + stats
 └── README.md
